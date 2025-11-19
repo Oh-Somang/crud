@@ -1,8 +1,15 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { useRouter, redirect } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 export default function AddTopic() {
+  const { status, data: session } = useSession()
+
+  if (!session) {
+    redirect('/login')
+  }
+
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const router = useRouter()
